@@ -4,6 +4,6 @@
 3. #Task - Production Deploy
 Deploy to production using heroku (optional) - Create heroku account
 
-4. CRUD opration done
+4. CRUD opration
   - Create, index, New, Show, Edit, Update, Destroy
 
