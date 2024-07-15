@@ -8,4 +8,8 @@ def gravatar_for(user, options = {size: 80})
   image_tag(gravatar_url, alt: user.username, class: "rounded shadow mx-auto d-block")
 end
 
+ def display_flash
+    flash[:notice] if flash[:notice]
+  end
+
 end

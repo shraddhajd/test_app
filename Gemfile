@@ -36,6 +36,7 @@ gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 gem 'will_paginate', '~> 4.0'
 gem 'kaminari'
+gem 'byebug'
 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -76,4 +77,8 @@ end
 
 group :production do
   gem 'pg'
+end
+
+group :development, :test do
+  gem 'byebug'
 end
