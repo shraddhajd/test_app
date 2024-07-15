@@ -27,6 +27,7 @@ class UsersController < ApplicationController
 
   def update
     respond_to do |format|
+      @user = User.find(params[:id])
       if @user.update(user_params)
         format.html { redirect_to articles_path, notice: "Your account information was succcesfully updated." }
         format.json { render :show, status: :ok, location: @article }
