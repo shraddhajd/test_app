@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-        <%= link_to "TEST APP", root_path, class: "navbar-brand", id: "logo" %>
+    <%= link_to "TEST APP", root_path, class: "navbar-brand", id: "logo" %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -14,15 +14,37 @@
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Articles</a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <%= link_to "Create new article", new_article_path, class: "dropdown-item" %>
-              <%= link_to "View article", articles_path, class: "dropdown-item" %>
+              <% if logged_in? %>
+                <%= link_to "Create new article", new_article_path, class: "dropdown-item" %>
+              <% end %>
+                <%= link_to "View article", articles_path, class: "dropdown-item" %>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+
+          <% if logged_in? %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Profile [<%= current_user.username %>]</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <%= link_to "View your profile", user_path(current_user), class: "dropdown-item" %>
+                <%= link_to "Edit your profile", edit_user_path(current_user), class: "dropdown-item" %> 
+                <%= link_to "Delete profile", user_path(current_user), class: "dropdown-item text-danger", data: {turbo_method: :delete, confirm: "Are you sure you want to delete this article?"} %>
+            </ul>
           </li>
+            
+            <li class="nav-item">
+              <%= link_to "Logout", logout_path, class: "nav-link", method: :delete %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "Log in", login_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Sign up", signup_path, class: "nav-link" %>
+            </li>
+          <% end %>
         </ul>
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search"    aria-label="Search">
