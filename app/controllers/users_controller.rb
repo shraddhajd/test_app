@@ -18,32 +18,39 @@ class UsersController < ApplicationController
     def edit
     end
 
-    def create
-      @user = User.new(user_params)
-        if @user.save
-          session[:user_id] = @user.id
-          flash[:notice] = "Welcome to the test app #{@user.username}, you have succesfully signed up." 
-          redirect_to @user
-        else
-          render 'new'
-        end
-    end
-
-    def update
-      if @user.update(user_params)
-          flash[:notice] = "Your account information was succcesfully updated." 
-          redirect_to @user
+  
+  def create
+    @user = User.new(user_params)
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @user, notice: "Welcome to the test app #{@user.username}, you have succesfully signed up." }
+        format.json { render :show, status: :created, location: @user }
       else
-        render 'edit'
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
 
-    def destroy
-      @user.destroy
-      session[:user_id] = nil if @user == current_user
-      flash[:notice] = "Account and all associated articles are successfully deleted.."
-      redirect_to users_path
+  def update
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to @user, notice: "Your account information was succcesfully updated." }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
+  end
+
+  def destroy
+    @user.destroy!
+    respond_to do |format|
+      format.html { redirect_to users_path, notice: "Account and all associated articles are successfully deleted.." }
+      format.json { head :no_content }
+    end
+  end
 
 
 

@@ -7,9 +7,9 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <%= link_to "Users", users_path, class: "nav-link" %>
-          </li>
+            <li class="nav-item">
+              <%= link_to "Users", users_path, class: "nav-link" %>
+            </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Articles</a>
@@ -23,10 +23,22 @@
             </ul>
           </li>
 
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categories</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <% if logged_in? && current_user.admin? %>
+                <%= link_to "Create new Category", new_category_path, class: "dropdown-item" %>
+              <% end %>
+                <%= link_to "View Categories", categories_path, class: "dropdown-item" %>
+            </ul>
+          </li>
+
+
           <% if logged_in? %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <%= "(Admin)" if current_user.admin? %> Profile [<%= current_user.username %>]</a>
+              <%= "(Admin)" if current_user.admin? %> [<%= current_user.username %>]</a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <%= link_to "View your profile", user_path(current_user), class: "dropdown-item" %>
                 <%= link_to "Edit your profile", edit_user_path(current_user), class: "dropdown-item" %> 
